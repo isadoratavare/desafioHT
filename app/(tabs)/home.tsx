@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
-import { Text, View } from "@/components/Themed";
+import { Text } from "@/components/Themed";
 
 export default function TabOneScreen() {
   return (

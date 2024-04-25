@@ -60,22 +60,24 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name="login/index"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="config/index"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+        <Stack>
+          <Stack.Screen
+            name="login/index"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="config/index"
+            options={{
+              headerBackVisible: true,
+              headerBackTitleVisible: false,
+              title: "Configurações",
+            }}
+          />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
     </ThemeProvider>
   );
 }
