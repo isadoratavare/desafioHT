@@ -2,26 +2,24 @@ import { collection, addDoc, Firestore } from "firebase/firestore";
 
 import { initializeApp, FirebaseApp } from "@firebase/app";
 import { getFirestore } from "@firebase/firestore";
-import {
-  getAuth,
-} from "@firebase/auth";
+import { getAuth, Auth } from "@firebase/auth";
 
 class FirestoreController {
   db: Firestore;
   app: FirebaseApp;
   firebaseConfig: any;
-  auth: any;
+  auth: Auth;
 
   constructor() {
     this.firebaseConfig = {
-      apiKey: `${process.env.API_KEY}`,
-      authDomain: process.env.AUTH_DOMAIN,
-      projectId: `${process.env.PROJECT_ID}`,
-      storageBucket: process.env.STORAGE_BUCKET,
-      messagingSenderId: process.env.MESSAGING_SENDER_ID,
-      appId: process.env.APP_ID,
+      apiKey: "AIzaSyBbjYWEgQ0b1mwFVAE7kKXY8InLOpLM5xU",
+      authDomain: "desafioht-e4c41.firebaseapp.com",
+      projectId: `desafioht-e4c41}`,
+      storageBucket: "desafioht-e4c41.appspot.com",
+      messagingSenderId: "3657948230",
+      appId: "1:3657948230:web:4b20865f6a007c5e513e47",
     };
-
+    console.log(this.firebaseConfig);
     this.app = initializeApp(this.firebaseConfig);
 
     this.db = getFirestore(this.app);
