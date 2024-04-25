@@ -7,15 +7,14 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import { useColorScheme } from '@/components/useColorScheme';
 
-import api from '@/utils/initializeFirebase';
-import { collection, query, getDocs } from "@firebase/firestore";
+import FirestoreController from '@/controllers/FirebaseController';
 
 export {
   ErrorBoundary,
 } from 'expo-router';
 
 export const unstable_settings = {
-  initialRouteName: '(tabs)',
+  initialRouteName: 'modal',
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -26,15 +25,15 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  const db = api()
+  const firebaseCtrl = new FirestoreController()
 
   useEffect(() => {
-    const q = query(collection(db, "user"));
-    const querySnapshot = getDocs(q).then((r) => {
-      r.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-      });
-    });
+    // const q = query(collection(firebaseCtrl.db, "user"));
+    // const querySnapshot = getDocs(q).then((r) => {
+    //   r.forEach((doc) => {
+    //     console.log(doc.id, " => ", doc.data());
+    //   });
+    // });
   }, [])
 
   useEffect(() => {
@@ -60,8 +59,11 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="login/index" options={{
+          headerShown: false
+        }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );
