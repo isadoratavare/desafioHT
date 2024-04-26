@@ -1,8 +1,12 @@
 import FirebaseController from "./FirebaseController";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signOut as signOutAuth,
+} from "firebase/auth";
 
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
 
 export const AuthController = () => {
   const firebaseCtrl = new FirebaseController();
@@ -28,8 +32,20 @@ export const AuthController = () => {
     return await AsyncStorage.getItem("refreshToken");
   }
 
+  async function signOut() {
+    await signOutAuth(auth)
+      .then(async () => {
+        await AsyncStorage.removeItem("refreshToken");
+        router.navigate("/login");
+      })
+      .catch((error) => {
+        Alert.alert("Erro ao sair da conta.");
+      });
+  }
+
   return {
     signIn,
     getToken,
+    signOut,
   };
 };
