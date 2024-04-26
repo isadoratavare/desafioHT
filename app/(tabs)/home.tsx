@@ -1,15 +1,33 @@
-import { SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
-import { router } from "expo-router";
-import { Text } from "@/components/Themed";
+import { ActivityIndicator, StyleSheet } from "react-native";
+import { Canvas, useFrame } from "@react-three/fiber/native";
+import { Suspense, useRef } from "react";
+import { Text, View } from "@/components/Themed";
+import useControls from "r3f-native-orbitcontrols";
+import { PerspectiveCamera } from "@react-three/drei";
 
 export default function TabOneScreen() {
+  function Cube(props: any) {
+    const meshRef = useRef<any>(null);
+
+    useFrame((state, delta) => (meshRef.current.rotation.x += delta));
+
+    return (
+      <mesh ref={meshRef} {...props}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color={"orange"} />
+      </mesh>
+    );
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableOpacity onPress={() => router.navigate("/config")}>
-        <Text>Configurar</Text>
-      </TouchableOpacity>
-      <Text style={styles.title}>Home</Text>
-    </SafeAreaView>
+    <>
+      <Canvas>
+        <ambientLight />
+        <Suspense fallback={<ActivityIndicator />}>
+          <Cube />
+        </Suspense>
+      </Canvas>
+    </>
   );
 }
 
