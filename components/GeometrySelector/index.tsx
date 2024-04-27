@@ -25,7 +25,7 @@ const GeometrySelector: React.FC<GeometrySelectorProps> = ({
   onSelect,
 }) => {
   const [type, setType] = useState<GeometryTypes>(selected?.shape || "cube");
-  const [color, setColor] = useState(selected?.color || "blue");
+  const [color, setColor] = useState(selected?.color);
   const [rotation, setRotation] = useState(selected?.rotation || [0, 0, 0]);
 
   const colorScheme = useColorScheme();

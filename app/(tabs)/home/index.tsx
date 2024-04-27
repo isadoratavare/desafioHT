@@ -1,97 +1,39 @@
-import { ActivityIndicator, StyleSheet } from "react-native";
-import { Canvas, useFrame } from "@react-three/fiber/native";
-import { Suspense, useRef } from "react";
+import React from "react";
+import { ActivityIndicator } from "react-native";
+import {
+  ConfigController,
+  ConfigControllerType,
+} from "@/controllers/ConfigController";
+import ShapeGeometry from "@/components/ShapeGeometry";
 
 export default function TabOneScreen() {
-  function Cube(props: any) {
-    const ref = useRef<any>(null);
+  const { config } = ConfigController() as ConfigControllerType;
 
-    useFrame((state, delta) => {
-      return (ref.current.rotation.x = 0.05);
-    });
-
-    return (
-      <mesh ref={ref} {...props}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color={"yellow"} />
-      </mesh>
-    );
+  if (config && config?.length === 0) {
+    return <ActivityIndicator />;
   }
-
-  function Cone(props: any) {
-    const meshRef = useRef<any>(null);
-
-    useFrame((state, delta) => (meshRef.current.rotation.x = 0.05));
-
+  console.log(config);
+  if (config && config.length > 0) {
     return (
-      <mesh position={[0, 0, 0]} rotation={[1, 0, 2]} ref={meshRef} {...props}>
-        <coneGeometry attach="geometry" args={[1, 2, 20]} />
-        <meshBasicMaterial
-          attach="material"
-          color={"red"}
-          opacity={1}
-          transparent
+      <>
+        <ShapeGeometry
+          type={config[0]?.shape}
+          color={config[0]?.color}
+          rotation={config[0]?.rotation}
         />
-      </mesh>
+
+        <ShapeGeometry
+          type={config[1]?.shape}
+          color={config[1]?.color}
+          rotation={config[1]?.rotation}
+        />
+
+        <ShapeGeometry
+          type={config[2]?.shape}
+          color={config[2]?.color}
+          rotation={config[2]?.rotation}
+        />
+      </>
     );
   }
-
-  function Dode(props: any) {
-    const meshRef = useRef<any>(null);
-    useFrame((state, delta) => (meshRef.current.rotation.y = 0.05));
-
-    return (
-      <mesh ref={meshRef} position={[0, 0, 0]} {...props}>
-        <dodecahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial color={"green"} />
-      </mesh>
-    );
-  }
-
-  return (
-    <>
-      <Canvas>
-        <ambientLight />
-        <Suspense fallback={<ActivityIndicator />}>
-          <Cube />
-        </Suspense>
-      </Canvas>
-      <Canvas
-        camera={{
-          position: [5, 5, 5],
-        }}
-      >
-        <ambientLight />
-        <Cone />
-      </Canvas>
-      <Canvas
-        camera={{
-          position: [5, 5, 5],
-        }}
-      >
-        <ambientLight />
-        <Suspense fallback={<ActivityIndicator />}>
-          <Dode />
-        </Suspense>
-      </Canvas>
-
-    </>
-  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

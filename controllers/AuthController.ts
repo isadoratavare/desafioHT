@@ -16,6 +16,7 @@ export const AuthController = () => {
     try {
       return await signInWithEmailAndPassword(auth, email, password)
         .then(async (res) => {
+          await AsyncStorage.setItem("userId", res.user.uid);
           await AsyncStorage.setItem("refreshToken", res.user.refreshToken);
           router.navigate("(tabs)/home");
           return { success: true };
@@ -35,6 +36,7 @@ export const AuthController = () => {
   async function signOut() {
     await signOutAuth(auth)
       .then(async () => {
+        await AsyncStorage.removeItem("userId");
         await AsyncStorage.removeItem("refreshToken");
         router.navigate("/login");
       })

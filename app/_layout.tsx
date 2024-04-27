@@ -12,6 +12,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useColorScheme } from "@/components/useColorScheme";
 
 import FirestoreController from "@/controllers/FirebaseController";
+import { ConfigControllerProvider } from "@/controllers/ConfigController";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -60,6 +61,7 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <ConfigControllerProvider>
         <Stack>
           <Stack.Screen
             name="login/index"
@@ -70,6 +72,7 @@ function RootLayoutNav() {
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
+      </ConfigControllerProvider>
     </ThemeProvider>
   );
 }
