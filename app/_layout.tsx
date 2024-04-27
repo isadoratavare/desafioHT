@@ -67,14 +67,6 @@ function RootLayoutNav() {
               headerShown: false,
             }}
           />
-          <Stack.Screen
-            name="config/index"
-            options={{
-              headerBackVisible: true,
-              headerBackTitleVisible: false,
-              title: "Configurações",
-            }}
-          />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>

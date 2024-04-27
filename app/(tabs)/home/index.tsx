@@ -6,7 +6,9 @@ export default function TabOneScreen() {
   function Cube(props: any) {
     const ref = useRef<any>(null);
 
-    useFrame((state, delta) => (ref.current.rotation.x += delta));
+    useFrame((state, delta) => {
+      return (ref.current.rotation.x = 0.05);
+    });
 
     return (
       <mesh ref={ref} {...props}>
@@ -19,10 +21,10 @@ export default function TabOneScreen() {
   function Cone(props: any) {
     const meshRef = useRef<any>(null);
 
-    useFrame((state, delta) => (meshRef.current.rotation.x += delta));
+    useFrame((state, delta) => (meshRef.current.rotation.x = 0.05));
 
     return (
-      <mesh position={[0, 0, 0]} rotation={[0, 0, 0]} ref={meshRef} {...props}>
+      <mesh position={[0, 0, 0]} rotation={[1, 0, 2]} ref={meshRef} {...props}>
         <coneGeometry attach="geometry" args={[1, 2, 20]} />
         <meshBasicMaterial
           attach="material"
@@ -36,7 +38,7 @@ export default function TabOneScreen() {
 
   function Dode(props: any) {
     const meshRef = useRef<any>(null);
-    useFrame((state, delta) => (meshRef.current.rotation.x += delta));
+    useFrame((state, delta) => (meshRef.current.rotation.y = 0.05));
 
     return (
       <mesh ref={meshRef} position={[0, 0, 0]} {...props}>
@@ -72,6 +74,7 @@ export default function TabOneScreen() {
           <Dode />
         </Suspense>
       </Canvas>
+
     </>
   );
 }

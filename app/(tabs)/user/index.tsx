@@ -28,7 +28,7 @@ export default function TabTwoScreen() {
       </View>
       <Text style={styles.title}>Deseja sair da sua conta?</Text>
       <TouchableOpacity
-        style={{ backgroundColor: "pink", width: 100, marginVertical: 10 }}
+        style={{ width: 100, marginVertical: 10 }}
       >
         <Button title="Sair" onPress={async () => await signOut()} />
       </TouchableOpacity>
