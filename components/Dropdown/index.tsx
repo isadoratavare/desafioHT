@@ -39,7 +39,7 @@ const Dropdown: React.FC<DropdownProps> = ({ icon, title, children }) => {
 
   return (
     <>
-      <TouchableOpacity onPress={handlePress}>
+      <TouchableOpacity onPress={handlePress} testID="dropdown-button">
         <View
           style={{
             paddingHorizontal: 10,
@@ -48,9 +48,10 @@ const Dropdown: React.FC<DropdownProps> = ({ icon, title, children }) => {
             alignItems: "center",
             justifyContent: "space-between",
           }}
+
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Icon icon={icon} />
+            <Icon icon={icon}  />
 
             <View style={{ marginHorizontal: 5 }}>
               <Text>{title}</Text>
@@ -71,7 +72,7 @@ const Dropdown: React.FC<DropdownProps> = ({ icon, title, children }) => {
         </View>
       </TouchableOpacity>
       {showDropdown && (
-        <>
+        <View testID="dropdown-content">
           <Animated.View
             style={{
               width: "100%",
@@ -86,7 +87,7 @@ const Dropdown: React.FC<DropdownProps> = ({ icon, title, children }) => {
           >
             {children}
           </Animated.View>
-        </>
+        </View>
       )}
     </>
   );

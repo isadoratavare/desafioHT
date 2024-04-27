@@ -3,7 +3,7 @@ import { Text, View } from "@/components/Themed";
 import { Button, SafeAreaView, ScrollView } from "react-native";
 import GeometrySelector from "@/components/GeometrySelector";
 import ConfigController from "@/controllers/ConfigController";
-import { GeometryObj, GeometryTypes } from "@/models/ConfigModel";
+import { GeometryObj } from "@/models/ConfigModel";
 
 const Config: React.FC = () => {
   const [geometryConfig, setGeometryConfig] = useState<GeometryObj[]>([]);
@@ -13,7 +13,6 @@ const Config: React.FC = () => {
   useEffect(() => {
     const data = async () =>
       await getConfig("HSpPrWJK0BeLhHs22t4oUZJjHzs2").then((value) => {
-        console.log(value.data.toString());
         setGeometryConfig(value.data.geometry);
       });
 
@@ -22,25 +21,76 @@ const Config: React.FC = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text>Configurações de Objetos 3D</Text>
       <ScrollView style={{ flex: 1 }}>
         <View>
-          <Text>Objeto 1</Text>
-          <GeometrySelector selected={geometryConfig[0]} onSelect={() => {}} />
+          <Text
+            style={{
+              textAlign: "center",
+              marginVertical: 10,
+              fontWeight: "bold",
+            }}
+          >
+            Objeto 1
+          </Text>
+          <GeometrySelector
+            selected={geometryConfig[0]}
+            onSelect={(newConfig: GeometryObj) => {
+              setGeometryConfig((prevState) => {
+                const newState = [...prevState];
+                newState[0] = newConfig;
+                return newState;
+              });
+            }}
+          />
         </View>
 
         <View>
-          <Text>Objeto 2</Text>
-          <GeometrySelector selected={geometryConfig[1]} onSelect={() => {}} />
+          <Text
+            style={{
+              textAlign: "center",
+              marginVertical: 10,
+              fontWeight: "bold",
+            }}
+          >
+            Objeto 2
+          </Text>
+          <GeometrySelector
+            selected={geometryConfig[1]}
+            onSelect={(newConfig: GeometryObj) => {
+              setGeometryConfig((prevState) => {
+                const newState = [...prevState];
+                newState[1] = newConfig;
+                return newState;
+              });
+            }}
+          />
         </View>
         <View>
-          <Text>Objeto 3</Text>
-          <GeometrySelector selected={geometryConfig[2]} onSelect={() => {}} />
+          <Text
+            style={{
+              textAlign: "center",
+              marginVertical: 10,
+              fontWeight: "bold",
+            }}
+          >
+            Objeto 3
+          </Text>
+          <GeometrySelector
+            selected={geometryConfig[2]}
+            onSelect={(newConfig: GeometryObj) => {
+              setGeometryConfig((prevState) => {
+                const newState = [...prevState];
+                newState[2] = newConfig;
+                return newState;
+              });
+            }}
+          />
         </View>
       </ScrollView>
       <Button
         title="Salvar"
         onPress={async () => {
+          console.log(geometryConfig);
         }}
       />
     </SafeAreaView>
