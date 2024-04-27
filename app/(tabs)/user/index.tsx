@@ -29,6 +29,7 @@ export default function TabTwoScreen() {
       <Text style={styles.title}>Deseja sair da sua conta?</Text>
       <TouchableOpacity
         style={{ width: 100, marginVertical: 10 }}
+        accessibilityLabel="Toque para sair da conta."
       >
         <Button title="Sair" onPress={async () => await signOut()} />
       </TouchableOpacity>

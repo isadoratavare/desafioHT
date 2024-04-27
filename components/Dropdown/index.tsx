@@ -1,17 +1,13 @@
 import React, { ReactNode, useState } from "react";
 import {
+  StyleSheet,
   TouchableOpacity,
   View,
   useColorScheme,
 } from "react-native";
 import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 import { Text } from "../Themed";
-import {
-  AntDesign,
-  FontAwesome,
-  Ionicons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import Icon from "../IconShape";
 
@@ -39,19 +35,14 @@ const Dropdown: React.FC<DropdownProps> = ({ icon, title, children }) => {
 
   return (
     <>
-      <TouchableOpacity onPress={handlePress} testID="dropdown-button">
-        <View
-          style={{
-            paddingHorizontal: 10,
-            paddingVertical: 15,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Icon icon={icon}  />
+      <TouchableOpacity
+        onPress={handlePress}
+        testID="dropdown-button"
+        accessibilityLabel="Toque para abrir o modal de configuração abaixo."
+      >
+        <View style={styles.header}>
+          <View style={styles.titleContainer}>
+            <Icon icon={icon} />
 
             <View style={{ marginHorizontal: 5 }}>
               <Text>{title}</Text>
@@ -74,16 +65,16 @@ const Dropdown: React.FC<DropdownProps> = ({ icon, title, children }) => {
       {showDropdown && (
         <View testID="dropdown-content">
           <Animated.View
-            style={{
-              width: "100%",
-              height,
-              backgroundColor:
-                colorScheme === "dark"
-                  ? Colors.dark.dropdown
-                  : Colors.light.dropdown,
-              borderBottomStartRadius: 15,
-              borderBottomEndRadius: 15,
-            }}
+            style={[
+              {
+                height,
+                backgroundColor:
+                  colorScheme === "dark"
+                    ? Colors.dark.dropdown
+                    : Colors.light.dropdown,
+              },
+              styles.animated,
+            ]}
           >
             {children}
           </Animated.View>
@@ -92,5 +83,21 @@ const Dropdown: React.FC<DropdownProps> = ({ icon, title, children }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  titleContainer: { flexDirection: "row", alignItems: "center" },
+  animated: {
+    width: "100%",
+    borderBottomStartRadius: 15,
+    borderBottomEndRadius: 15,
+  },
+});
 
 export default Dropdown;

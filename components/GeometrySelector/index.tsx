@@ -45,6 +45,31 @@ const GeometrySelector: React.FC<GeometrySelectorProps> = ({
     });
   }, [type, color, rotation]);
 
+  const ColorOption = ({
+    colorName,
+    colorLabel,
+  }: {
+    colorName: string;
+    colorLabel: string;
+  }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          setColor(colorName);
+        }}
+        style={[
+          styles.colorSelect,
+          {
+            borderColor: iconColor,
+            borderWidth: color === colorName ? 2 : 0,
+            backgroundColor: color,
+          },
+        ]}
+        accessibilityLabel={`"Toque para selecionar a cor ${colorLabel} para o objeto."`}
+      />
+    );
+  };
+
   return (
     <>
       <Dropdown icon={type} title={`Forma: ${type}`}>
@@ -58,6 +83,7 @@ const GeometrySelector: React.FC<GeometrySelectorProps> = ({
               },
             ]}
             onPress={() => selectShape("cube")}
+            accessibilityLabel="Toque para selecionar o cubo."
           >
             <FontAwesome name="cube" size={24} color={iconColor} />
             <Text style={{ marginVertical: 5 }}>Cubo</Text>
@@ -71,6 +97,7 @@ const GeometrySelector: React.FC<GeometrySelectorProps> = ({
               },
             ]}
             onPress={() => selectShape("cone")}
+            accessibilityLabel="Toque para selecionar o cone."
           >
             <MaterialCommunityIcons name="cone" size={24} color={iconColor} />
             <Text style={{ marginVertical: 5 }}>Cone</Text>
@@ -84,6 +111,7 @@ const GeometrySelector: React.FC<GeometrySelectorProps> = ({
               },
             ]}
             onPress={() => selectShape("dodecahedron")}
+            accessibilityLabel="Toque para selecionar o dodecaedro."
           >
             <Dodecahedron fill={iconColor} height={24} width={24} />
             <Text style={{ marginVertical: 5, textAlign: "center" }}>
@@ -94,94 +122,16 @@ const GeometrySelector: React.FC<GeometrySelectorProps> = ({
       </Dropdown>
       <Dropdown icon="color-fill" title={`Cor: ${color}`}>
         <View style={styles.buttonTypeContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              setColor("red");
-            }}
-            style={[
-              styles.colorSelect,
-              {
-                borderColor: iconColor,
-                borderWidth: color === "red" ? 2 : 0,
-                backgroundColor: "red",
-              },
-            ]}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setColor("orange");
-            }}
-            style={[
-              styles.colorSelect,
-              {
-                borderColor: iconColor,
-                borderWidth: color === "orange" ? 2 : 0,
-                backgroundColor: "orange",
-              },
-            ]}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setColor("yellow");
-            }}
-            style={[
-              styles.colorSelect,
-              {
-                borderColor: iconColor,
-                borderWidth: color === "yellow" ? 2 : 0,
-                backgroundColor: "yellow",
-              },
-            ]}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setColor("green");
-            }}
-            style={[
-              styles.colorSelect,
-              {
-                borderColor: iconColor,
-                borderWidth: color === "green" ? 2 : 0,
-                backgroundColor: "green",
-              },
-            ]}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setColor("blue");
-            }}
-            style={[
-              styles.colorSelect,
-              {
-                borderColor: iconColor,
-                borderWidth: color === "blue" ? 2 : 0,
-                backgroundColor: "blue",
-              },
-            ]}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setColor("pink");
-            }}
-            style={[
-              styles.colorSelect,
-              {
-                borderColor: iconColor,
-                borderWidth: color === "pink" ? 2 : 0,
-                backgroundColor: "pink",
-              },
-            ]}
-          />
+          <ColorOption colorName="red" colorLabel="vermelho" />
+          <ColorOption colorName="orange" colorLabel="laranja" />
+          <ColorOption colorName="yellow" colorLabel="amarelo" />
+          <ColorOption colorName="green" colorLabel="verde" />
+          <ColorOption colorName="blue" colorLabel="azul" />
+          <ColorOption colorName="pink" colorLabel="rosa" />
         </View>
       </Dropdown>
       <Dropdown icon="screen-rotation-alt" title={`Rotação: [${rotation}]`}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            padding: 10,
-          }}
-        >
+        <View style={styles.rotationContainer}>
           <Text>X: </Text>
           <RotationInput
             initialValue={rotation[0].toString()}
@@ -241,6 +191,11 @@ const styles = StyleSheet.create({
     height: 30,
     marginHorizontal: 5,
     borderRadius: 10,
+  },
+  rotationContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
   },
 });
 export default GeometrySelector;
