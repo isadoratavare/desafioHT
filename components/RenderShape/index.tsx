@@ -54,7 +54,7 @@ const RenderShape: React.FC<{ config: any[] }> = ({ config }) => {
       return (
         <View {...events} style={{ flex: 1 }}>
           <Canvas>
-            <Cone color={config.color || "#6be092"} position={[0, 0, 0]} />
+            <Cone color={config.color || "#6be092"} position={[0, 0, 0]} rotation={config.rotation}/>
             <OrbitControls />
           </Canvas>
         </View>
@@ -65,7 +65,7 @@ const RenderShape: React.FC<{ config: any[] }> = ({ config }) => {
       return (
         <View {...events} style={{ flex: 1 }}>
           <Canvas>
-            <Cube color={config.color || "#6be092"} position={[0, 0, 0]} />
+            <Cube color={config.color || "#6be092"} position={[0, 0, 0]} rotation={config.rotation}/>
             <OrbitControls />
           </Canvas>
         </View>
@@ -75,7 +75,7 @@ const RenderShape: React.FC<{ config: any[] }> = ({ config }) => {
       return (
         <View {...events} style={{ flex: 1 }}>
           <Canvas>
-            <Dode color={config.color || "#6be092"} position={[0, 0, 0]} />
+            <Dode color={config.color || "#6be092"} position={[0, 0, 0]} rotation={config.rotation}/>
             <OrbitControls />
           </Canvas>
         </View>

@@ -64,8 +64,8 @@ const Config: React.FC<{ config: any[]; updateConfig: any }> = ({
         </ScrollView>
         <Button
           title="Salvar"
-          onPress={() => {
-            updateConfig(geometryConfig);
+          onPress={async () => {
+            await updateConfig(geometryConfig);
           }}
         />
       </SafeAreaView>
