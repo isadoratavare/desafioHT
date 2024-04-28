@@ -1,48 +1,59 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet } from "react-native";
+import { StyleSheet, useColorScheme } from "react-native";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
 import { Text, TextInput, View } from "@/components/Themed";
+import Button from "@/components/Button";
+
 import { AuthController } from "@/controllers/AuthController";
+import { UserModel } from "@/models/UserModel";
 
 const LoginView: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { signIn } = AuthController();
+  const colorScheme = useColorScheme();
+  const { checkAlreadyLogged } = UserModel();
 
   useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem("refreshToken");
-      if (token) {
-        router.navigate("(tabs)/home");
-      }
-    };
-
-    checkToken();
+    checkAlreadyLogged().then((logged) => {
+      if (logged) router.navigate("(tabs)/home");
+    });
   }, []);
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text>Login</Text>
+      <View style={{}}>
+        <Text style={styles.h3}>Welcome Back!</Text>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: colorScheme === "dark" ? "#47494E" : "black" },
+          ]}
+        >
+          Please sign in to your account.
+        </Text>
       </View>
-      <TextInput
-        placeholder="Nome de Usuário"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        autoCapitalize={"none"}
-        style={styles.textInput}
-      />
-      <TextInput
-        placeholder="Senha"
-        secureTextEntry
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        style={styles.textInput}
-      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          autoCapitalize={"none"}
+          style={[styles.textInput, { color: colorScheme === "dark" ? "white" : "black" }]}
+
+        />
+        <TextInput
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          autoCapitalize={"none"}
+          style={[styles.textInput, { color: colorScheme === "dark" ? "white" : "black" }]}
+        />
+      </View>
       <Button
         title="Entrar"
         onPress={async () => await signIn(email, password)}
@@ -51,18 +62,37 @@ const LoginView: React.FC = () => {
   );
 };
 const styles = StyleSheet.create({
+  inputContainer: {
+    marginVertical: 10,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  h3: {
+    fontSize: 30,
+    fontWeight: "400",
+    marginVertical: 10,
+    textAlign: "center",
+    fontFamily: "Lato-Bold",
+  },
+  subtitle: {
+    fontSize: 18,
+    textAlign: "center",
+    marginVertical: 10,
+  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 40,
   },
   textInput: {
-    width: "80%",
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    width: "100%",
+    marginVertical: 5,
+    paddingHorizontal: 15,
+    backgroundColor: "#171A1F",
+    borderRadius: 15,
+    paddingVertical: 15,
   },
 });
 

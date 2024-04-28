@@ -35,7 +35,7 @@ export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
-  return <DefaultText style={[{ color }, style]} {...otherProps} />;
+  return <DefaultText style={[{ color, fontFamily: "Lato" }, style]} {...otherProps} />;
 }
 
 export function View(props: ViewProps) {
@@ -51,11 +51,12 @@ export function View(props: ViewProps) {
 export function TextInput(props: TextInputProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
 
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+  const color = useThemeColor({ light: lightColor, dark: "#5D5E66" }, "text");
 
   return (
     <DefaultTextInput
       style={[{ color }, style]}
+      placeholderTextColor={color}
       {...otherProps}
     />
   );
