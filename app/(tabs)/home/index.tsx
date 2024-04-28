@@ -1,39 +1,49 @@
-import React from "react";
-import { ActivityIndicator } from "react-native";
-import {
-  ConfigController,
-  ConfigControllerType,
-} from "@/controllers/ConfigController";
-import ShapeGeometry from "@/components/ShapeGeometry";
+import React, { Suspense, useEffect, useState } from "react";
+import { ActivityIndicator, Button } from "react-native";
+import { Canvas } from "@react-three/fiber/native";
+import { View } from "@/components/Themed";
+import useControls from "r3f-native-orbitcontrols";
+import { ConfigController } from "@/controllers/ConfigController";
+import RenderShape from "@/components/RenderShape";
+import Config from "../config";
 
 export default function TabOneScreen() {
-  const { config } = ConfigController() as ConfigControllerType;
+  const [config, setConfig] = useState([
+    {
+      color: "red",
+      shape: "cone",
+      rotation: [0, 0, 1],
+    },
+    {
+      color: "yellow",
+      shape: "cube",
+      rotation: [0, 0, 1],
+    },
+    {
+      color: "green",
+      shape: "dodecahedron",
+      rotation: [0, 0, 1],
+    },
+  ]);
+  const [isEditModeOpen, setIsEditModeOpen] = useState(false);
 
-  if (config && config?.length === 0) {
-    return <ActivityIndicator />;
-  }
-  console.log(config);
-  if (config && config.length > 0) {
+  if (isEditModeOpen) {
     return (
-      <>
-        <ShapeGeometry
-          type={config[0]?.shape}
-          color={config[0]?.color}
-          rotation={config[0]?.rotation}
-        />
-
-        <ShapeGeometry
-          type={config[1]?.shape}
-          color={config[1]?.color}
-          rotation={config[1]?.rotation}
-        />
-
-        <ShapeGeometry
-          type={config[2]?.shape}
-          color={config[2]?.color}
-          rotation={config[2]?.rotation}
-        />
-      </>
+      <Config
+        config={config}
+        updateConfig={(newConfig) => {
+          console.log(newConfig)
+          setIsEditModeOpen(false)
+          setConfig(newConfig)
+        }}
+      />
     );
   }
+
+  return (
+    <>
+      <RenderShape config={config} />
+      <Button title="Editar" onPress={() => setIsEditModeOpen(true)} />
+    </>
+  );
 }

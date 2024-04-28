@@ -34,7 +34,9 @@ export default function TabLayout() {
         options={{
           title: "Configure seus objetos",
           tabBarIcon: ({ color }) => <TabBarIcon name="gear" color={color} />,
+          href: null
         }}
+        
       />
       <Tabs.Screen
         name="user/index"

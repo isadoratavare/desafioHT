@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text, View } from "@/components/Themed";
 import {
   Alert,
@@ -9,21 +9,14 @@ import {
 } from "react-native";
 import GeometrySelector from "@/components/GeometrySelector";
 import { GeometryObj } from "@/models/ConfigModel";
-import {
-  ConfigController,
-  ConfigControllerType,
-} from "@/controllers/ConfigController";
-import { router } from "expo-router";
 
-const Config: React.FC = () => {
-  const { config, updateConfig } = ConfigController() as ConfigControllerType;
+const Config: React.FC<{ config: any[]; updateConfig: any }> = ({
+  config,
+  updateConfig,
+}) => {
   const [geometryConfig, setGeometryConfig] = useState<GeometryObj[]>(
     config || []
   );
-
-  useEffect(() => {
-    setGeometryConfig(config);
-  }, [config]);
 
   if (config?.length > 0) {
     return (
@@ -72,19 +65,8 @@ const Config: React.FC = () => {
         </ScrollView>
         <Button
           title="Salvar"
-          onPress={async () => {
-            await updateConfig(geometryConfig)
-              .then((res) => {
-                Alert.alert(res?.message, "", [
-                  {
-                    text: "OK",
-                    onPress: () => {
-                      router.navigate("/home");
-                    },
-                  },
-                ]);
-              })
-              .catch(() => Alert.alert("Erro ao salvar."));
+          onPress={() => {
+            updateConfig(geometryConfig);
           }}
         />
       </SafeAreaView>

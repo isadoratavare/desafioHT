@@ -35,7 +35,8 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "14.1.0",
     "react-native-web": "~0.19.6",
-    "three": "^0.164.0",
+    "react-three-fiber": "^5.0.0-beta.12",
+    "three": "^0.164.1",
     "three-stdlib": "^2.29.6"
   },
   "devDependencies": {

@@ -19,11 +19,12 @@ export type ConfigControllerType = {
   updateConfig: (data: GeometryObj[]) => Promise<ResponseData>;
   getConfig: (userId: string | null) => Promise<ResponseData>;
   createConfigUser: (config: ConfigType) => Promise<ResponseData>;
+  setConfig: (data: GeometryObj[]) => void
 };
 
 const ConfigContext = createContext<ConfigControllerType>({} as ConfigControllerType);
 
-export function ConfigControllerProvider({ children }: {children: ReactNode}) {
+export function ConfigControllerProvider({ children }: { children: ReactNode }) {
   const [config, setConfig] = useState<GeometryObj[]>([]);
   const [configId, setConfigId] = useState<string>("");
 
@@ -92,6 +93,7 @@ export function ConfigControllerProvider({ children }: {children: ReactNode}) {
     }
   }
   async function updateConfig(data: GeometryObj[]) {
+
     setConfig(data);
 
     const userId = await AsyncStorage.getItem("userId");
@@ -150,6 +152,7 @@ export function ConfigControllerProvider({ children }: {children: ReactNode}) {
         getConfig,
         updateConfig,
         createConfigUser,
+        setConfig
       }}
     >
       {children}

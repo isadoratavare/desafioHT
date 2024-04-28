@@ -13,26 +13,18 @@ const ShapeGeometry: React.FC<ShapeGeometryProps> = ({
   rotation,
 }) => {
   function Cube(props: any) {
-    const ref = useRef<any>(null);
-
-    useFrame((state, delta) => {
-      return (ref.current.rotation.x = 0.05);
-    });
 
     return (
-      <mesh ref={ref} {...props} rotation={props.rotation || []}>
+      <mesh {...props} >
         <boxGeometry args={[2, 2, 2]} />
         <meshStandardMaterial color={props.color || "yellow"} />
       </mesh>
     );
   }
   function Cone(props: any) {
-    const meshRef = useRef<any>(null);
-
-    useFrame((state, delta) => (meshRef.current.rotation.x = 0.05));
 
     return (
-      <mesh rotation={[0, 0, 0]} ref={meshRef} {...props}>
+      <mesh {...props}>
         <coneGeometry attach="geometry" args={[1, 2, 20]} />
         <meshBasicMaterial
           attach="material"
@@ -44,11 +36,8 @@ const ShapeGeometry: React.FC<ShapeGeometryProps> = ({
     );
   }
   function Dode(props: any) {
-    const meshRef = useRef<any>(null);
-    useFrame((state, delta) => (meshRef.current.rotation.x = 0.05));
-
     return (
-      <mesh ref={meshRef} {...props}>
+      <mesh {...props} >
         <dodecahedronGeometry args={[1, 0]} />
         <meshStandardMaterial color={props.color || "yellow"} />
       </mesh>
