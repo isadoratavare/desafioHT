@@ -1,5 +1,4 @@
 import {
-  Button,
   StyleSheet,
   TouchableOpacity,
   useColorScheme,
@@ -9,6 +8,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Text, View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
 import { AuthController } from "@/controllers/AuthController";
+import Button from "@/components/Button";
 
 export default function TabTwoScreen() {
   const colorScheme = useColorScheme();
@@ -26,12 +26,11 @@ export default function TabTwoScreen() {
           size={100}
         />
       </View>
-      <Text style={styles.title}>Deseja sair da sua conta?</Text>
       <TouchableOpacity
         style={{ width: 100, marginVertical: 10 }}
         accessibilityLabel="Toque para sair da conta."
       >
-        <Button title="Sair" onPress={async () => await signOut()} />
+        <Button title="Sign out" onPress={async () => await signOut()} />
       </TouchableOpacity>
     </View>
   );
@@ -42,10 +41,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,

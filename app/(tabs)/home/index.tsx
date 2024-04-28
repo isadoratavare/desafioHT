@@ -1,11 +1,9 @@
-import React, { Suspense, useEffect, useState } from "react";
-import { ActivityIndicator, Button } from "react-native";
-import { Canvas } from "@react-three/fiber/native";
-import { View } from "@/components/Themed";
-import useControls from "r3f-native-orbitcontrols";
-import { ConfigController } from "@/controllers/ConfigController";
+import React, { useState } from "react";
 import RenderShape from "@/components/RenderShape";
 import Config from "../config";
+import Button from "@/components/Button";
+import { View } from "@/components/Themed";
+import { GeometryObj } from "@/models/ConfigModel";
 
 export default function TabOneScreen() {
   const [config, setConfig] = useState([
@@ -31,8 +29,7 @@ export default function TabOneScreen() {
     return (
       <Config
         config={config}
-        updateConfig={(newConfig) => {
-          console.log(newConfig)
+        updateConfig={(newConfig: GeometryObj[]) => {
           setIsEditModeOpen(false)
           setConfig(newConfig)
         }}
@@ -43,7 +40,9 @@ export default function TabOneScreen() {
   return (
     <>
       <RenderShape config={config} />
-      <Button title="Editar" onPress={() => setIsEditModeOpen(true)} />
+      <View style={{ width: "100%", paddingHorizontal: 80, paddingVertical: 10 }}>
+        <Button title="Editar" onPress={() => setIsEditModeOpen(true)} />
+      </View>
     </>
   );
 }

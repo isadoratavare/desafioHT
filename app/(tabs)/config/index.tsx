@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Text, View } from "@/components/Themed";
 import {
-  Alert,
-  Button,
   SafeAreaView,
   ScrollView,
   StyleSheet,
 } from "react-native";
 import GeometrySelector from "@/components/GeometrySelector";
 import { GeometryObj } from "@/models/ConfigModel";
+import Button from "@/components/Button";
 
 const Config: React.FC<{ config: any[]; updateConfig: any }> = ({
   config,
@@ -65,8 +64,8 @@ const Config: React.FC<{ config: any[]; updateConfig: any }> = ({
         </ScrollView>
         <Button
           title="Salvar"
-          onPress={() => {
-            updateConfig(geometryConfig);
+          onPress={async () => {
+            await updateConfig(geometryConfig);
           }}
         />
       </SafeAreaView>

@@ -25,7 +25,7 @@ export const AuthController = () => {
           return { success: false, error: e.message };
         });
     } catch (error: any) {
-      return { success: false, error: error.message };
+      throw new Error(error.message);
     }
   }
 

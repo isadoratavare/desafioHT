@@ -16,15 +16,16 @@ import { ConfigControllerProvider } from "@/controllers/ConfigController";
 export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
-  initialRouteName: "modal",
+  initialRouteName: "login",
 };
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
+    Lato: require("../assets/fonts/Lato-Regular.ttf"),
+    'Lato-Bold': require('../assets/fonts/Lato-Bold.ttf'),
   });
 
   useEffect(() => {
@@ -50,14 +51,13 @@ function RootLayoutNav() {
   return (
     <ConfigControllerProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
+        <Stack initialRouteName="login/index">
           <Stack.Screen
             name="login/index"
             options={{
               headerShown: false,
             }}
           />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
       </ThemeProvider>
