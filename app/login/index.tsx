@@ -12,10 +12,10 @@ import { UserModel } from "@/models/UserModel";
 const LoginView: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const { signIn } = AuthController();
   const colorScheme = useColorScheme();
-  const { checkAlreadyLogged } = UserModel();
+  const { checkAlreadyLogged, signInUser } = UserModel();
 
   useEffect(() => {
     checkAlreadyLogged().then((logged) => {
@@ -42,8 +42,10 @@ const LoginView: React.FC = () => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           autoCapitalize={"none"}
-          style={[styles.textInput, { color: colorScheme === "dark" ? "white" : "black" }]}
-
+          style={[
+            styles.textInput,
+            { color: colorScheme === "dark" ? "white" : "black" },
+          ]}
         />
         <TextInput
           placeholder="Password"
@@ -51,13 +53,27 @@ const LoginView: React.FC = () => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           autoCapitalize={"none"}
-          style={[styles.textInput, { color: colorScheme === "dark" ? "white" : "black" }]}
+          style={[
+            styles.textInput,
+            { color: colorScheme === "dark" ? "white" : "black" },
+          ]}
         />
       </View>
       <Button
         title="Entrar"
-        onPress={async () => await signIn(email, password)}
+        onPress={async () =>
+          await signInUser(email, password)
+            .then((res) => {
+              setError("");
+              router.navigate("home")
+            })
+            .catch((e) => {
+              console.log(e);
+              setError(e.message);
+            })
+        }
       />
+      {error !== "" ? <Text>{error}</Text> : <></>}
     </View>
   );
 };
