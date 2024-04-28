@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Text, TextInput, View } from "@/components/Themed";
 import { Button, StyleSheet } from "react-native";
-import { AuthController } from "@/controllers/AuthController";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+
+import { Text, TextInput, View } from "@/components/Themed";
+import { AuthController } from "@/controllers/AuthController";
 
 const LoginView: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -32,12 +34,14 @@ const LoginView: React.FC = () => {
         value={email}
         onChangeText={(text) => setEmail(text)}
         autoCapitalize={"none"}
+        style={styles.textInput}
       />
       <TextInput
         placeholder="Senha"
         secureTextEntry
         value={password}
         onChangeText={(text) => setPassword(text)}
+        style={styles.textInput}
       />
       <Button
         title="Entrar"
@@ -51,6 +55,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  textInput: {
+    width: "80%",
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
 });
 

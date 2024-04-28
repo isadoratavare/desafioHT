@@ -22,17 +22,27 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="home"
+        name="home/index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          headerShown: false
         }}
       />
       <Tabs.Screen
-        name="user"
+        name="config/index"
+        options={{
+          title: "Configure seus objetos",
+          tabBarIcon: ({ color }) => <TabBarIcon name="gear" color={color} />,
+          href: null
+        }}
+        
+      />
+      <Tabs.Screen
+        name="user/index"
         options={{
           title: "User",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </Tabs>
