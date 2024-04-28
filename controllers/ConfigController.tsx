@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import {
   ref,
   get,
@@ -21,9 +21,9 @@ export type ConfigControllerType = {
   createConfigUser: (config: ConfigType) => Promise<ResponseData>;
 };
 
-const ConfigContext = createContext<ConfigControllerType | null>(null);
+const ConfigContext = createContext<ConfigControllerType>({} as ConfigControllerType);
 
-export function ConfigControllerProvider({ children }: any) {
+export function ConfigControllerProvider({ children }: {children: ReactNode}) {
   const [config, setConfig] = useState<GeometryObj[]>([]);
   const [configId, setConfigId] = useState<string>("");
 

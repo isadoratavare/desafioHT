@@ -73,15 +73,18 @@ const Config: React.FC = () => {
         <Button
           title="Salvar"
           onPress={async () => {
-            const res = await updateConfig(geometryConfig);
-            Alert.alert(res?.message, "", [
-              {
-                text: "OK",
-                onPress: () => {
-                  router.navigate("/home");
-                },
-              },
-            ]);
+            await updateConfig(geometryConfig)
+              .then((res) => {
+                Alert.alert(res?.message, "", [
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      router.navigate("/home");
+                    },
+                  },
+                ]);
+              })
+              .catch(() => Alert.alert("Erro ao salvar."));
           }}
         />
       </SafeAreaView>

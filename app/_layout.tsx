@@ -11,7 +11,6 @@ import * as SplashScreen from "expo-splash-screen";
 
 import { useColorScheme } from "@/components/useColorScheme";
 
-import FirestoreController from "@/controllers/FirebaseController";
 import { ConfigControllerProvider } from "@/controllers/ConfigController";
 
 export { ErrorBoundary } from "expo-router";
@@ -27,17 +26,6 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
-
-  const firebaseCtrl = new FirestoreController();
-
-  useEffect(() => {
-    // const q = query(collection(firebaseCtrl.db, "user"));
-    // const querySnapshot = getDocs(q).then((r) => {
-    //   r.forEach((doc) => {
-    //     console.log(doc.id, " => ", doc.data());
-    //   });
-    // });
-  }, []);
 
   useEffect(() => {
     if (error) throw error;
@@ -60,8 +48,8 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <ConfigControllerProvider>
+    <ConfigControllerProvider>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen
             name="login/index"
@@ -72,7 +60,7 @@ function RootLayoutNav() {
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
-      </ConfigControllerProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </ConfigControllerProvider>
   );
 }

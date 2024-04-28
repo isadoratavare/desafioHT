@@ -62,7 +62,7 @@ const GeometrySelector: React.FC<GeometrySelectorProps> = ({
           {
             borderColor: iconColor,
             borderWidth: color === colorName ? 2 : 0,
-            backgroundColor: color,
+            backgroundColor: colorName,
           },
         ]}
         accessibilityLabel={`"Toque para selecionar a cor ${colorLabel} para o objeto."`}
