@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Text, View } from "@/components/Themed";
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
 } from "react-native";
+
+import { Text, View } from "@/components/Themed";
 import GeometrySelector from "@/components/GeometrySelector";
-import { GeometryObj } from "@/models/ConfigModel";
 import Button from "@/components/Button";
+
+import { GeometryObj } from "@/models/ConfigModel";
 
 const Config: React.FC<{ config: any[]; updateConfig: any }> = ({
   config,
@@ -63,7 +65,7 @@ const Config: React.FC<{ config: any[]; updateConfig: any }> = ({
           </View>
         </ScrollView>
         <Button
-          title="Salvar"
+          title="Save"
           onPress={async () => {
             await updateConfig(geometryConfig);
           }}

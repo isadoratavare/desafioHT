@@ -1,5 +1,6 @@
 import { Canvas } from "@react-three/fiber/native";
 import useControls from "r3f-native-orbitcontrols";
+import { useRef } from "react";
 import { View } from "react-native";
 
 const Cube = (props) => {
@@ -51,6 +52,7 @@ const RenderShape: React.FC<{ config: any[] }> = ({ config }) => {
   const Shape = ({ config }: any) => {
     const [OrbitControls, events] = useControls();
     if (config.shape === "cone") {
+      const cameraRef = useRef(null)
       return (
         <View {...events} style={{ flex: 1 }}>
           <Canvas>

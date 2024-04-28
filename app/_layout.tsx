@@ -11,8 +11,6 @@ import * as SplashScreen from "expo-splash-screen";
 
 import { useColorScheme } from "@/components/useColorScheme";
 
-import { ConfigControllerProvider } from "@/controllers/ConfigController";
-
 export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
@@ -49,7 +47,6 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ConfigControllerProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack initialRouteName="login/index">
           <Stack.Screen
@@ -61,6 +58,5 @@ function RootLayoutNav() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
       </ThemeProvider>
-    </ConfigControllerProvider>
   );
 }

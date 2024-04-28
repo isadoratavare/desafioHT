@@ -1,4 +1,4 @@
-import FirebaseController from "./FirebaseController";
+import Firebase from "./Firebase";
 import {
   signInWithEmailAndPassword,
   signOut as signOutAuth,
@@ -8,8 +8,8 @@ import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
-export const AuthController = () => {
-  const firebaseCtrl = new FirebaseController();
+export const AuthContext = () => {
+  const firebaseCtrl = new Firebase();
   const auth = firebaseCtrl.auth;
 
   async function signIn(email: string, password: string) {

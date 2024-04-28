@@ -1,8 +1,8 @@
-import { AuthController } from "@/controllers/AuthController";
+import { AuthContext } from "@/contexts/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function UserModel() {
-  const { signIn } = AuthController();
+  const { signIn } = AuthContext();
 
   async function checkAlreadyLogged() {
     const token = await AsyncStorage.getItem("refreshToken");

@@ -1,4 +1,3 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import {
   ref,
   get,
@@ -10,11 +9,11 @@ import {
   set,
 } from "@firebase/database";
 import { ResponseData } from "@/models/AppModel";
-import FirestoreController from "./FirebaseController";
+import Firebase from "./Firebase";
 import { ConfigType, GeometryObj } from "@/models/ConfigModel";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export type ConfigControllerType = {
+export type ConfigContextType = {
   config: GeometryObj[];
   updateConfig: (data: GeometryObj[]) => Promise<ResponseData>;
   getConfig: (userId: string | null) => Promise<ResponseData>;
@@ -22,27 +21,9 @@ export type ConfigControllerType = {
   setConfig: (data: GeometryObj[]) => void
 };
 
-const ConfigContext = createContext<ConfigControllerType>({} as ConfigControllerType);
-
-export function ConfigControllerProvider({ children }: { children: ReactNode }) {
-  const [config, setConfig] = useState<GeometryObj[]>([]);
-  const [configId, setConfigId] = useState<string>("");
-
-  const app = new FirestoreController();
+export function ConfigContext() {
+  const app = new Firebase();
   const db = app.db;
-
-  useEffect(() => {
-    const data = async () => {
-      const userId = await AsyncStorage.getItem("userId");
-
-      return await getConfig(userId).then((value) => {
-        setConfigId(value.data.id);
-        setConfig(value.data.geometry);
-      });
-    };
-
-    data();
-  }, []);
 
   async function getConfig(userId: string | null): Promise<ResponseData> {
     const mockConfig = {
@@ -92,10 +73,7 @@ export function ConfigControllerProvider({ children }: { children: ReactNode }) 
       return { status: 500, data: mockConfig, message: error.message };
     }
   }
-  async function updateConfig(data: GeometryObj[]) {
-
-    setConfig(data);
-
+  async function updateConfig(data: GeometryObj[], configId: string) {
     const userId = await AsyncStorage.getItem("userId");
     if (!userId) {
       return {
@@ -136,30 +114,17 @@ export function ConfigControllerProvider({ children }: { children: ReactNode }) 
     };
     return await set(ref(db, "config/" + configId), data)
       .then((res) => {
-        console.log(res);
         return { status: 200, data: null, message: "" };
       })
       .catch((err) => {
-        console.log(err);
         return { status: 500, data: null, message: err.message };
       });
   }
 
-  return (
-    <ConfigContext.Provider
-      value={{
-        config,
-        getConfig,
-        updateConfig,
-        createConfigUser,
-        setConfig
-      }}
-    >
-      {children}
-    </ConfigContext.Provider>
+  return ({
+    getConfig,
+    updateConfig,
+    createConfigUser,
+  }
   );
 }
-
-export const ConfigController = () => {
-  return useContext(ConfigContext);
-};
