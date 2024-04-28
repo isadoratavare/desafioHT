@@ -1,3 +1,4 @@
+import Colors from "@/constants/Colors";
 import React from "react";
 import {
     TouchableOpacity,
@@ -13,7 +14,7 @@ type ButtonProps = {
 
 const Button = ({ title, onPress }: ButtonProps) => {
     const colorScheme = useColorScheme();
-    const color = colorScheme === "dark" ? "#5566FF" : "";
+    const color = colorScheme === "dark" ? Colors.dark.tint : Colors.light.tint;
 
     return (
         <TouchableOpacity
