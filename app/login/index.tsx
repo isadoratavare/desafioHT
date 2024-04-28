@@ -6,7 +6,6 @@ import { router } from "expo-router";
 import { Text, TextInput, View } from "@/components/Themed";
 import Button from "@/components/Button";
 
-import { AuthController } from "@/controllers/AuthController";
 import { UserModel } from "@/models/UserModel";
 
 const LoginView: React.FC = () => {
@@ -60,7 +59,7 @@ const LoginView: React.FC = () => {
         />
       </View>
       <Button
-        title="Entrar"
+        title="Login"
         onPress={async () =>
           await signInUser(email, password)
             .then((res) => {
@@ -68,12 +67,11 @@ const LoginView: React.FC = () => {
               router.navigate("home")
             })
             .catch((e) => {
-              console.log(e);
               setError(e.message);
             })
         }
       />
-      {error !== "" ? <Text>{error}</Text> : <></>}
+      {error !== "" ? <Text style={{ color: "red" }}>{error}</Text> : <></>}
     </View>
   );
 };

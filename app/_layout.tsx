@@ -16,7 +16,7 @@ import { ConfigControllerProvider } from "@/controllers/ConfigController";
 export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
-  initialRouteName: "modal",
+  initialRouteName: "login",
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -51,14 +51,13 @@ function RootLayoutNav() {
   return (
     <ConfigControllerProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
+        <Stack initialRouteName="login/index">
           <Stack.Screen
             name="login/index"
             options={{
               headerShown: false,
             }}
           />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
       </ThemeProvider>

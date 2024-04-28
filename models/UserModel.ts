@@ -1,6 +1,5 @@
 import { AuthController } from "@/controllers/AuthController";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
 
 export function UserModel() {
   const { signIn } = AuthController();
