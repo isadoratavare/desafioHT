@@ -35,6 +35,24 @@ cd nome-do-projeto
 3. Instale as dependências do projeto utilizando o npm ou o yarn:
 npm install ou yarn install
 
+### Configuração do Firebase
+
+Antes de executar o aplicativo, certifique-se de adicionar as configurações do Firebase no arquivo `Firebase.ts`. Você pode encontrar essas configurações na sua conta do Firebase.
+
+Certifique-se de incluir as seguintes informações no arquivo `Firebase.ts`:
+
+```typescript
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_DOMINIO.firebaseapp.com",
+  databaseURL: "https://SEU_DOMINIO.firebaseio.com",
+  projectId: "SEU_PROJECT_ID",
+  storageBucket: "SEU_STORAGE_BUCKET",
+  messagingSenderId: "SEU_SENDER_ID",
+  appId: "SEU_APP_ID"
+};
+```
+
 ### Executando o aplicativo
 
 Para iniciar o aplicativo em um ambiente de desenvolvimento, execute o seguinte comando:
