@@ -3,7 +3,7 @@ import { initializeApp, FirebaseApp } from "@firebase/app";
 import { getDatabase, Database } from "@firebase/database";
 import { getAuth, Auth } from "@firebase/auth";
 
-class FirestoreController {
+class Firebase {
   db: Database;
   app: FirebaseApp;
   firebaseConfig: any;
@@ -18,14 +18,6 @@ class FirestoreController {
     this.auth = getAuth(this.app);
   }
 
-  async addData(data: any) {
-    try {
-      return { success: true };
-    } catch (error: any) {
-      console.error("Erro ao adicionar dados: ", error);
-      return { success: false, error: error.message };
-    }
-  }
 }
 
-export default FirestoreController;
+export default Firebase;

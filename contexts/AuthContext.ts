@@ -1,4 +1,4 @@
-import FirebaseController from "./FirebaseController";
+import Firebase from "./Firebase";
 import {
   signInWithEmailAndPassword,
   signOut as signOutAuth,
@@ -8,23 +8,32 @@ import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
-export const AuthController = () => {
-  const firebaseCtrl = new FirebaseController();
+export const AuthContext = () => {
+  const firebaseCtrl = new Firebase();
   const auth = firebaseCtrl.auth;
 
   async function signIn(email: string, password: string) {
     try {
       return await signInWithEmailAndPassword(auth, email, password)
         .then(async (res) => {
-          await AsyncStorage.setItem("userId", res.user.uid);
-          await AsyncStorage.setItem("refreshToken", res.user.refreshToken);
-          router.navigate("(tabs)/home");
-          return { success: true };
+          console.log(res)
+          if (res) {
+            await AsyncStorage.setItem("userId", res.user.uid);
+            await AsyncStorage.setItem("refreshToken", res.user.refreshToken);
+            router.navigate("(tabs)/home");
+          } else {
+            throw new Error("Login is invalid");
+          }
         })
         .catch((e) => {
-          return { success: false, error: e.message };
+          
+          throw new Error(e.message);
         });
     } catch (error: any) {
+      console.log(error)
+      if (error.toString() === "[Error: Firebase: Error (auth/invalid-credential).]") {
+        throw new Error('Your email or password was incorrect.');
+      }
       throw new Error(error.message);
     }
   }

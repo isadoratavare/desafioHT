@@ -5,14 +5,14 @@ import {
 } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import { Text, View } from "@/components/Themed";
+import { View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
-import { AuthController } from "@/controllers/AuthController";
+import { AuthContext } from "@/contexts/AuthContext";
 import Button from "@/components/Button";
 
 export default function TabTwoScreen() {
   const colorScheme = useColorScheme();
-  const { signOut } = AuthController();
+  const { signOut } = AuthContext();
   return (
     <View style={styles.container}>
       <View

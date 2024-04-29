@@ -6,7 +6,7 @@ import { router } from "expo-router";
 import { Text, TextInput, View } from "@/components/Themed";
 import Button from "@/components/Button";
 
-import { UserModel } from "@/models/UserModel";
+import { UserContext } from "@/contexts/UserContext";
 
 const LoginView: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -14,17 +14,20 @@ const LoginView: React.FC = () => {
   const [error, setError] = useState("");
 
   const colorScheme = useColorScheme();
-  const { checkAlreadyLogged, signInUser } = UserModel();
+  const { checkAlreadyLogged, signInUser } = UserContext();
 
   useEffect(() => {
     checkAlreadyLogged().then((logged) => {
-      if (logged) router.navigate("(tabs)/home");
+      if (logged) {
+        router.navigate("(tabs)/home")
+      };
     });
   }, []);
 
+
   return (
     <View style={styles.container}>
-      <View style={{}}>
+      <View>
         <Text style={styles.h3}>Welcome Back!</Text>
         <Text
           style={[
@@ -43,7 +46,10 @@ const LoginView: React.FC = () => {
           autoCapitalize={"none"}
           style={[
             styles.textInput,
-            { color: colorScheme === "dark" ? "white" : "black" },
+            {
+              color: colorScheme === "dark" ? "white" : "black",
+              backgroundColor: colorScheme === "dark" ? "#171A1F" : "#DEE1E6",
+            },
           ]}
         />
         <TextInput
@@ -54,24 +60,31 @@ const LoginView: React.FC = () => {
           autoCapitalize={"none"}
           style={[
             styles.textInput,
-            { color: colorScheme === "dark" ? "white" : "black" },
+            {
+              color: colorScheme === "dark" ? "white" : "black",
+              backgroundColor: colorScheme === "dark" ? "#171A1F" : "#DEE1E6",
+            },
           ]}
         />
       </View>
       <Button
         title="Login"
-        onPress={async () =>
-          await signInUser(email, password)
-            .then((res) => {
-              setError("");
-              router.navigate("home")
-            })
-            .catch((e) => {
-              setError(e.message);
-            })
-        }
+        onPress={async () => {
+          await signInUser(email, password).then(() => {
+            setError("");
+            if (router) {
+              router.navigate("home");
+            }
+          }).catch(e => {
+            console.log(e);
+            setError(e.message)
+          });
+
+
+        }}
       />
-      {error !== "" ? <Text style={{ color: "red" }}>{error}</Text> : <></>}
+
+      {error !== "" ? <Text style={{ color: "red" }} testID="error">{error}</Text> : <View testID="error" />}
     </View>
   );
 };
@@ -104,7 +117,6 @@ const styles = StyleSheet.create({
     width: "100%",
     marginVertical: 5,
     paddingHorizontal: 15,
-    backgroundColor: "#171A1F",
     borderRadius: 15,
     paddingVertical: 15,
   },

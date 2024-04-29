@@ -10,3 +10,9 @@ export type ConfigType = {
   userId: string;
   geometry: GeometryObj[];
 };
+
+export interface ResponseData {
+  status: number;
+  message: string;
+  data: any; 
+}
