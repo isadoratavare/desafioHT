@@ -1,5 +1,7 @@
 ## Desafio Imagens 3D com three.js
 
+![Demonstraçao](https://drive.google.com/uc?id=1Rk2Ou0Kfs6hCPFFatHsc7rwFCJgpKB1i)
+
 Este é um projeto React Native desenvolvido utilizando o Expo, uma ferramenta que simplifica o processo de desenvolvimento e build de aplicativos móveis. O aplicativo utiliza uma variedade de tecnologias para fornecer uma experiência rica e interativa aos usuários. Algumas dessas tecnologias incluem:
 - Firebase Authentication: Para autenticação de usuários e gerenciamento de sessões de login.
 - three.js: Uma biblioteca JavaScript para criar e exibir gráficos 3D interativos no navegador.
@@ -58,5 +60,4 @@ const firebaseConfig = {
 Para iniciar o aplicativo em um ambiente de desenvolvimento, execute o seguinte comando:
 npx expo start
 
-### Demonstração
-![Demonstraçao](https://drive.google.com/uc?id=1Rk2Ou0Kfs6hCPFFatHsc7rwFCJgpKB1i)
+
