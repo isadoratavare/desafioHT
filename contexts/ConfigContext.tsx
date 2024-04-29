@@ -8,9 +8,8 @@ import {
   child,
   set,
 } from "@firebase/database";
-import { ResponseData } from "@/models/AppModel";
 import Firebase from "./Firebase";
-import { ConfigType, GeometryObj } from "@/models/ConfigModel";
+import { ConfigType, GeometryObj, ResponseData } from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export type ConfigContextType = {
@@ -18,7 +17,7 @@ export type ConfigContextType = {
   updateConfig: (data: GeometryObj[]) => Promise<ResponseData>;
   getConfig: (userId: string | null) => Promise<ResponseData>;
   createConfigUser: (config: ConfigType) => Promise<ResponseData>;
-  setConfig: (data: GeometryObj[]) => void
+  setConfig: (data: GeometryObj[]) => void;
 };
 
 export function ConfigContext() {
@@ -46,7 +45,6 @@ export function ConfigContext() {
         },
       ],
     };
-
     if (!userId) {
       return {
         status: 500,
@@ -55,23 +53,25 @@ export function ConfigContext() {
       };
     }
 
-    try {
-      const res = await get(
-        query(ref(app.db, "config"), orderByChild("userId"), equalTo(userId))
-      );
-
-      if (res.exists()) {
-        let value;
-        res.forEach((item) => {
-          value = item.val();
-        });
-        return { status: 200, data: value, message: "" };
-      } else {
+    return await get(
+      query(ref(app.db, "config"), orderByChild("userId"), equalTo(userId))
+    )
+      .then((res) => {
+        if (res.exists()) {
+          let value;
+          res.forEach((item) => {
+            value = item.val();
+          });
+          return {
+            status: 200, data: value, message: "No data available"
+          };
+        }
         return { status: 500, data: mockConfig, message: "No data available" };
-      }
-    } catch (error: any) {
-      return { status: 500, data: mockConfig, message: error.message };
-    }
+      })
+      .catch((e) => {
+        return { status: 500, data: mockConfig, message: "No data available" };
+      });
+
   }
   async function updateConfig(data: GeometryObj[], configId: string) {
     const userId = await AsyncStorage.getItem("userId");
@@ -84,7 +84,7 @@ export function ConfigContext() {
     }
 
     if (!configId) {
-      return { status: 500, data: [], message: "No config available" };
+      throw new Error("Config not found.");
     }
 
     const dataConfig = {
@@ -92,39 +92,13 @@ export function ConfigContext() {
       userId,
       geometry: data,
     };
-    return await set(ref(db, "config/" + configId), dataConfig)
-      .then((res) => {
-        return {
-          status: 200,
-          data: null,
-          message: "Configuração atualizada com sucesso!",
-        };
-      })
-      .catch((err) => {
-        return { status: 500, data: null, message: err.message };
-      });
-  }
-  async function createConfigUser(
-    dataConfig: ConfigType
-  ): Promise<ResponseData> {
-    const configId = push(child(ref(db), "config")).key;
-    const data = {
-      id: configId,
-      ...dataConfig,
-    };
-    return await set(ref(db, "config/" + configId), data)
-      .then((res) => {
-        return { status: 200, data: null, message: "" };
-      })
-      .catch((err) => {
-        return { status: 500, data: null, message: err.message };
-      });
+    return await set(ref(db, "config/" + configId), dataConfig).catch((err) => {
+      throw new Error(err.message);
+    });
   }
 
-  return ({
+  return {
     getConfig,
     updateConfig,
-    createConfigUser,
-  }
-  );
+  };
 }

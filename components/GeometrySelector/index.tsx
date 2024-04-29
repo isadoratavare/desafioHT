@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { GeometryObj, GeometryTypes } from "@/models/ConfigModel";
+import { GeometryObj, GeometryTypes } from "@/types";
 import Dropdown from "../Dropdown";
 
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";

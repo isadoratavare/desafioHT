@@ -6,7 +6,7 @@ import RenderShape from "@/components/RenderShape";
 import Button from "@/components/Button";
 import { View } from "@/components/Themed";
 
-import { GeometryObj } from "@/models/ConfigModel";
+import { GeometryObj } from "@/types";
 import { ConfigContext } from "@/contexts/ConfigContext";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -38,6 +38,7 @@ export default function TabOneScreen() {
       const userId = await AsyncStorage.getItem("userId");
 
       await getConfig(userId).then((value) => {
+        console.log("DATA: ", value.data)
         setConfigId(value.data.id);
         setConfig(value.data.geometry);
       });

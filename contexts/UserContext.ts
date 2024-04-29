@@ -1,7 +1,7 @@
 import { AuthContext } from "@/contexts/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export function UserModel() {
+export function UserContext() {
   const { signIn } = AuthContext();
 
   async function checkAlreadyLogged() {
@@ -29,7 +29,9 @@ export function UserModel() {
     }
 
     await signIn(email, password).catch((e) => {
-      throw new Error(e);
+      if (e.message === "Firebase: Error (auth/invalid-email).") throw new Error('Your email or password was incorrect.');
+      if (e.message === "Firebase: Error (auth/invalid-credential).") throw new Error('Your email or password was incorrect.')
+      throw new Error(e.message);
     });
   }
 

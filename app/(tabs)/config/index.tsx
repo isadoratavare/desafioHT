@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -9,7 +10,7 @@ import { Text, View } from "@/components/Themed";
 import GeometrySelector from "@/components/GeometrySelector";
 import Button from "@/components/Button";
 
-import { GeometryObj } from "@/models/ConfigModel";
+import { GeometryObj } from "@/types";
 
 const Config: React.FC<{ config: any[]; updateConfig: any }> = ({
   config,
@@ -67,7 +68,7 @@ const Config: React.FC<{ config: any[]; updateConfig: any }> = ({
         <Button
           title="Save"
           onPress={async () => {
-            await updateConfig(geometryConfig);
+            await updateConfig(geometryConfig).catch((e) => Alert.alert(e.message));
           }}
         />
       </SafeAreaView>
