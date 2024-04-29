@@ -57,3 +57,6 @@ const firebaseConfig = {
 
 Para iniciar o aplicativo em um ambiente de desenvolvimento, execute o seguinte comando:
 npx expo start
+
+### Demonstração
+![Demonstraçao](https://drive.google.com/uc?id=1Rk2Ou0Kfs6hCPFFatHsc7rwFCJgpKB1i)
